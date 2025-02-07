@@ -17,6 +17,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<DatabaseContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddScoped<IUser, UserService>();
 builder.Services.AddScoped<JwtService>();
+builder.Services.AddScoped<ITrip, TripService>();
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddSwaggerGen(c =>
@@ -45,6 +46,7 @@ builder.Services.AddSwaggerGen(c =>
             new string[] {}
         }
     });
+
 });
 
 
@@ -68,6 +70,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey))
         };
     });
+
 
 var app = builder.Build();
 
