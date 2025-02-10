@@ -101,5 +101,35 @@ namespace Trip_Planner.Controllers
         {
             return await _tripService.DeleteDestination(tripId, destinationId);
         }
+
+        [Authorize]
+        [HttpPost("{id}/activities")]
+        public async Task<ActionResult<Activity>> CreateActivity(int id, [FromBody] CreateActivityModel createActivityModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest("Invalid data provided.");
+            }
+            var activity = new Activity
+            {
+                ActivityName = createActivityModel.ActivityName,
+                TripId = id
+            };
+            return await _tripService.CreateActivity(activity);
+        }
+
+        [Authorize]
+        [HttpGet("{id}/activities")]
+        public async Task<ActionResult<IEnumerable<Activity>>> GetActivities(int id)
+        {
+            return await _tripService.GetActivities(id);
+        }
+
+        [Authorize]
+        [HttpDelete("{tripId}/activities/{activityId}")]
+        public async Task<ActionResult> DeleteActivity(int tripId, int activityId)
+        {
+            return await _tripService.DeleteActivity(tripId, activityId);
+        }
     }
 }
