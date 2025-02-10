@@ -1,9 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Trip_Planner.Models;
+using Trip_Planner.Models.Activities;
+using Trip_Planner.Models.Destinations;
+using Trip_Planner.Models.Expenses;
+using Trip_Planner.Models.Trips;
 
 namespace Trip_Planner.Interfaces
 {
-    public interface ITrip
+    public interface ITripService
     {
         Task<ActionResult<Trip>> CreateTrip(Trip trip);
         Task<ActionResult<Trip>> GetTrip(int id);
@@ -15,5 +18,8 @@ namespace Trip_Planner.Interfaces
         Task<ActionResult<Activity>> CreateActivity(Activity activity);
         Task<ActionResult<IEnumerable<Activity>>> GetActivities(int tripId);
         Task<ActionResult> DeleteActivity(int tripId, int activityId);
+        Task<ActionResult<Expense>> CreateExpense(Expense expense);
+        Task<ActionResult<IEnumerable<Expense>>> GetExpenses(int tripId);
+        Task<ActionResult> DeleteExpense(int tripId, int expenseId);
     }
 }

@@ -1,6 +1,9 @@
 ﻿using System.Text.Json.Serialization;
+using Trip_Planner.Models.Activities;
+using Trip_Planner.Models.Destinations;
+using Trip_Planner.Models.Expenses;
 
-namespace Trip_Planner.Models
+namespace Trip_Planner.Models.Trips
 {
     public class Trip
     {
@@ -20,5 +23,8 @@ namespace Trip_Planner.Models
 
         [JsonIgnore]
         public ICollection<Activity> Activities { get; set; }
+
+        [JsonIgnore]
+        public ICollection<Expense> Expenses { get; set; }
     }
 }

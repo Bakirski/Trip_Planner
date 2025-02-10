@@ -1,10 +1,8 @@
 ﻿using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Trip_Planner.Interfaces;
-using Trip_Planner.Models;
-using Trip_Planner.Services;
+using Trip_Planner.Models.Users;
 
 namespace Trip_Planner.Controllers
 {
@@ -12,8 +10,8 @@ namespace Trip_Planner.Controllers
     [Route("api")]
     public class UserController : ControllerBase
     {
-        private readonly IUser _service;
-        public UserController(IUser service)
+        private readonly IUserService _service;
+        public UserController(IUserService service)
         {
             _service = service;
         }

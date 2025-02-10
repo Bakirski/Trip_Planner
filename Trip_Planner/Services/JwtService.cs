@@ -2,7 +2,7 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using Trip_Planner.Models;
+using Trip_Planner.Models.Users;
 
 namespace Trip_Planner.Services
 {

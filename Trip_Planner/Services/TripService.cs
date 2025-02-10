@@ -2,11 +2,14 @@
 using Microsoft.EntityFrameworkCore;
 using Trip_Planner.Data;
 using Trip_Planner.Interfaces;
-using Trip_Planner.Models;
+using Trip_Planner.Models.Activities;
+using Trip_Planner.Models.Destinations;
+using Trip_Planner.Models.Expenses;
+using Trip_Planner.Models.Trips;
 
 namespace Trip_Planner.Services
 {
-    public class TripService : ITrip
+    public class TripService : ITripService
     {
         private readonly DatabaseContext _dbContext;
 
@@ -81,6 +84,12 @@ namespace Trip_Planner.Services
         public async Task<ActionResult<IEnumerable<Destination>>> GetDestinations(int id)
         {
             var destinations = await _dbContext.Destinations.Where(d => d.TripId == id).ToListAsync();
+
+            if (destinations.Count == 0)
+            {
+                return new NotFoundObjectResult("Could not find any destinations for this trip.");
+            }
+
             return new OkObjectResult(destinations);
         }
 
@@ -106,6 +115,12 @@ namespace Trip_Planner.Services
         public async Task<ActionResult<IEnumerable<Activity>>> GetActivities(int tripId)
         {
             var activities = await _dbContext.Activities.Where(a => a.TripId == tripId).ToListAsync();
+
+            if (activities.Count == 0)
+            {
+                return new NotFoundObjectResult("Could not find any activities for this trip.");
+            }
+
             return new OkObjectResult(activities);
         }
 
@@ -120,5 +135,37 @@ namespace Trip_Planner.Services
             await _dbContext.SaveChangesAsync();
             return new OkResult();
         }
+
+        public async Task<ActionResult<Expense>> CreateExpense(Expense expense)
+        {
+            _dbContext.Expenses.Add(expense);
+            await _dbContext.SaveChangesAsync();
+            return new OkObjectResult(expense);
+        }
+
+        public async Task<ActionResult<IEnumerable<Expense>>> GetExpenses(int tripId)
+        {
+            var expenses = await _dbContext.Expenses.Where(e => e.TripId == tripId).ToListAsync();
+
+            if (expenses.Count == 0)
+            {
+                return new NotFoundObjectResult("Could not find any expenses for this trip.");
+            }
+
+            return new OkObjectResult(expenses);
+        }
+
+        public async Task<ActionResult> DeleteExpense(int tripId, int expenseId)
+        {
+            var expense = await _dbContext.Expenses.FindAsync(expenseId);
+            if (expense == null)
+            {
+                return new NotFoundObjectResult("Could not find expense to delete.");
+            }
+            _dbContext.Expenses.Remove(expense);
+            await _dbContext.SaveChangesAsync();
+            return new OkResult();
+        }
+
     }
 }

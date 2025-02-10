@@ -1,7 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
+using Trip_Planner.Models.Trips;
 
-namespace Trip_Planner.Models
+namespace Trip_Planner.Models.Users
 {
     public class User
     {

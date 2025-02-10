@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-namespace Trip_Planner.Models
+namespace Trip_Planner.Models.Users
 {
     public class UserRegistrationModel
     {

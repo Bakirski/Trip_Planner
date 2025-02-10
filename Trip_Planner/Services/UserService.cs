@@ -5,10 +5,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Trip_Planner.Data;
 using Trip_Planner.Interfaces;
-using Trip_Planner.Models;
+using Trip_Planner.Models.Users;
 namespace Trip_Planner.Services
 {
-    public class UserService : IUser
+    public class UserService : IUserService
     {
         private readonly DatabaseContext _dbContext;
         private readonly JwtService _jwtService;

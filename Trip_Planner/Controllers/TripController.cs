@@ -2,7 +2,10 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Trip_Planner.Interfaces;
-using Trip_Planner.Models;
+using Trip_Planner.Models.Activities;
+using Trip_Planner.Models.Destinations;
+using Trip_Planner.Models.Expenses;
+using Trip_Planner.Models.Trips;
 using Trip_Planner.Services;
 
 namespace Trip_Planner.Controllers
@@ -11,8 +14,8 @@ namespace Trip_Planner.Controllers
     [Route("api/trips")]
     public class TripController : ControllerBase
     {
-        private readonly ITrip _tripService;
-        public TripController(ITrip tripService)
+        private readonly ITripService _tripService;
+        public TripController(ITripService tripService)
         {
             _tripService = tripService;
         }
@@ -130,6 +133,37 @@ namespace Trip_Planner.Controllers
         public async Task<ActionResult> DeleteActivity(int tripId, int activityId)
         {
             return await _tripService.DeleteActivity(tripId, activityId);
+        }
+
+        [Authorize]
+        [HttpPost("{id}/expenses")]
+        public async Task<ActionResult<Expense>> CreateExpense(int id, [FromBody] CreateExpenseModel createExpenseModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest("Invalid data provided.");
+            }
+            var expense = new Expense
+            {
+                expenseName = createExpenseModel.ExpenseName,
+                expenseAmount = createExpenseModel.ExpenseAmount,
+                TripId = id
+            };
+            return await _tripService.CreateExpense(expense);
+        }
+
+        [Authorize]
+        [HttpGet("{id}/expenses")]
+        public async Task<ActionResult<IEnumerable<Expense>>> GetExpenses(int id)
+        {
+            return await _tripService.GetExpenses(id);
+        }
+
+        [Authorize]
+        [HttpDelete("{tripId}/expenses/{expenseId}")]
+        public async Task<ActionResult> DeleteExpense(int tripId, int expenseId)
+        {
+            return await _tripService.DeleteExpense(tripId, expenseId);
         }
     }
 }

@@ -15,9 +15,9 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<DatabaseContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
-builder.Services.AddScoped<IUser, UserService>();
+builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<JwtService>();
-builder.Services.AddScoped<ITrip, TripService>();
+builder.Services.AddScoped<ITripService, TripService>();
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddSwaggerGen(c =>

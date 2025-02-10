@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Trip_Planner.Models
+namespace Trip_Planner.Models.Destinations
 {
     public class Destination
     {
