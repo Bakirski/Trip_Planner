@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Trip_Planner.Data;
 using Trip_Planner.Interfaces;
 using Trip_Planner.Models;
@@ -17,6 +18,15 @@ namespace Trip_Planner.Services
         public async Task<ActionResult<Trip>> CreateTrip(Trip trip)
         {
             _dbContext.Trips.Add(trip);
+            await _dbContext.SaveChangesAsync();
+            var destination = new Destination
+            {
+                DestinationName = trip.Destination,
+                TripId = trip.Id
+            };
+
+            _dbContext.Destinations.Add(destination);
+
             await _dbContext.SaveChangesAsync();
             return new OkObjectResult(trip);
         }
@@ -57,6 +67,31 @@ namespace Trip_Planner.Services
                 return new NotFoundObjectResult("Could not find trip to delete.");
             }
             _dbContext.Trips.Remove(trip);
+            await _dbContext.SaveChangesAsync();
+            return new OkResult();
+        }
+
+        public async Task<ActionResult<Destination>> CreateDestination(Destination destination)
+        {
+            _dbContext.Destinations.Add(destination);
+            await _dbContext.SaveChangesAsync();
+            return new OkObjectResult(destination);
+        }
+
+        public async Task<ActionResult<IEnumerable<Destination>>> GetDestinations(int id)
+        {
+            var destinations = await _dbContext.Destinations.Where(d => d.TripId == id).ToListAsync();
+            return new OkObjectResult(destinations);
+        }
+
+        public async Task<ActionResult> DeleteDestination(int tripId, int destinationId)
+        {
+            var destination = await _dbContext.Destinations.FindAsync(destinationId);
+            if (destination == null)
+            {
+                return new NotFoundObjectResult("Could not find destination to delete.");
+            }
+            _dbContext.Destinations.Remove(destination);
             await _dbContext.SaveChangesAsync();
             return new OkResult();
         }
