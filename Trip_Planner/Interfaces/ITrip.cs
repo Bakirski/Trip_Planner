@@ -12,6 +12,8 @@ namespace Trip_Planner.Interfaces
         Task<ActionResult<Destination>> CreateDestination(Destination destination);
         Task<ActionResult<IEnumerable<Destination>>> GetDestinations(int id);
         Task<ActionResult> DeleteDestination(int tripId, int destinationId);
-        
+        Task<ActionResult<Activity>> CreateActivity(Activity activity);
+        Task<ActionResult<IEnumerable<Activity>>> GetActivities(int tripId);
+        Task<ActionResult> DeleteActivity(int tripId, int activityId);
     }
 }
