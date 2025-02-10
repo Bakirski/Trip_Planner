@@ -9,6 +9,7 @@ namespace Trip_Planner.Data
         public DbSet<User> Users { get; set; }
         public DbSet<Trip> Trips { get; set; }
         public DbSet<Destination> Destinations { get; set; }
+        public DbSet<Activity> Activities { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -28,6 +29,12 @@ namespace Trip_Planner.Data
                 .HasOne<Trip>()
                 .WithMany(d => d.Destinations)
                 .HasForeignKey(d => d.TripId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Activity>()
+                .HasOne<Trip>()
+                .WithMany(a => a.Activities)
+                .HasForeignKey(a => a.TripId)
                 .OnDelete(DeleteBehavior.Cascade);
         }
     }
