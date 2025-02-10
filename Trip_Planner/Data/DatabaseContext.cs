@@ -1,5 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Trip_Planner.Models;
+using Trip_Planner.Models.Activities;
+using Trip_Planner.Models.Destinations;
+using Trip_Planner.Models.Expenses;
+using Trip_Planner.Models.Trips;
+using Trip_Planner.Models.Users;
 namespace Trip_Planner.Data
 {
     public class DatabaseContext : DbContext
@@ -10,6 +14,8 @@ namespace Trip_Planner.Data
         public DbSet<Trip> Trips { get; set; }
         public DbSet<Destination> Destinations { get; set; }
         public DbSet<Activity> Activities { get; set; }
+
+        public DbSet<Expense> Expenses { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -35,6 +41,12 @@ namespace Trip_Planner.Data
                 .HasOne<Trip>()
                 .WithMany(a => a.Activities)
                 .HasForeignKey(a => a.TripId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Expense>()
+                .HasOne<Trip>()
+                .WithMany(e => e.Expenses)
+                .HasForeignKey(e => e.TripId)
                 .OnDelete(DeleteBehavior.Cascade);
         }
     }
