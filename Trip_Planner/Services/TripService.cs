@@ -95,5 +95,30 @@ namespace Trip_Planner.Services
             await _dbContext.SaveChangesAsync();
             return new OkResult();
         }
+
+        public async Task<ActionResult<Activity>> CreateActivity(Activity activity)
+        {
+            _dbContext.Activities.Add(activity);
+            await _dbContext.SaveChangesAsync();
+            return new OkObjectResult(activity);
+        }
+
+        public async Task<ActionResult<IEnumerable<Activity>>> GetActivities(int tripId)
+        {
+            var activities = await _dbContext.Activities.Where(a => a.TripId == tripId).ToListAsync();
+            return new OkObjectResult(activities);
+        }
+
+        public async Task<ActionResult> DeleteActivity(int tripId, int activityId)
+        {
+            var activity = await _dbContext.Activities.FindAsync(activityId);
+            if (activity == null)
+            {
+                return new NotFoundObjectResult("Could not find activity to delete.");
+            }
+            _dbContext.Activities.Remove(activity);
+            await _dbContext.SaveChangesAsync();
+            return new OkResult();
+        }
     }
 }
