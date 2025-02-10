@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace Trip_Planner.Models
 {
@@ -14,5 +14,8 @@ namespace Trip_Planner.Models
         public DateOnly EndDate { get; set; }
 
         public int UserId { get; set; }
+
+        [JsonIgnore]
+        public ICollection<Destination> Destinations { get; set; }
     }
 }
