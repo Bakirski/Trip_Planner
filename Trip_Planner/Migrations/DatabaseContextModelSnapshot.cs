@@ -22,7 +22,7 @@ namespace Trip_Planner.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("Trip_Planner.Models.Activities.Activity", b =>
+            modelBuilder.Entity("Trip_Planner.Models.Activity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -44,7 +44,7 @@ namespace Trip_Planner.Migrations
                     b.ToTable("Activities");
                 });
 
-            modelBuilder.Entity("Trip_Planner.Models.Destinations.Destination", b =>
+            modelBuilder.Entity("Trip_Planner.Models.Destination", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -66,32 +66,7 @@ namespace Trip_Planner.Migrations
                     b.ToTable("Destinations");
                 });
 
-            modelBuilder.Entity("Trip_Planner.Models.Expenses.Expense", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("TripId")
-                        .HasColumnType("integer");
-
-                    b.Property<decimal>("expenseAmount")
-                        .HasColumnType("numeric");
-
-                    b.Property<string>("expenseName")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("TripId");
-
-                    b.ToTable("Expenses");
-                });
-
-            modelBuilder.Entity("Trip_Planner.Models.Trips.Trip", b =>
+            modelBuilder.Entity("Trip_Planner.Models.Trip", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -129,7 +104,7 @@ namespace Trip_Planner.Migrations
                     b.ToTable("Trips");
                 });
 
-            modelBuilder.Entity("Trip_Planner.Models.Users.User", b =>
+            modelBuilder.Entity("Trip_Planner.Models.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -154,52 +129,41 @@ namespace Trip_Planner.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("Trip_Planner.Models.Activities.Activity", b =>
+            modelBuilder.Entity("Trip_Planner.Models.Activity", b =>
                 {
-                    b.HasOne("Trip_Planner.Models.Trips.Trip", null)
+                    b.HasOne("Trip_Planner.Models.Trip", null)
                         .WithMany("Activities")
                         .HasForeignKey("TripId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Trip_Planner.Models.Destinations.Destination", b =>
+            modelBuilder.Entity("Trip_Planner.Models.Destination", b =>
                 {
-                    b.HasOne("Trip_Planner.Models.Trips.Trip", null)
+                    b.HasOne("Trip_Planner.Models.Trip", null)
                         .WithMany("Destinations")
                         .HasForeignKey("TripId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Trip_Planner.Models.Expenses.Expense", b =>
+            modelBuilder.Entity("Trip_Planner.Models.Trip", b =>
                 {
-                    b.HasOne("Trip_Planner.Models.Trips.Trip", null)
-                        .WithMany("Expenses")
-                        .HasForeignKey("TripId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Trip_Planner.Models.Trips.Trip", b =>
-                {
-                    b.HasOne("Trip_Planner.Models.Users.User", null)
+                    b.HasOne("Trip_Planner.Models.User", null)
                         .WithMany("Trips")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Trip_Planner.Models.Trips.Trip", b =>
+            modelBuilder.Entity("Trip_Planner.Models.Trip", b =>
                 {
                     b.Navigation("Activities");
 
                     b.Navigation("Destinations");
-
-                    b.Navigation("Expenses");
                 });
 
-            modelBuilder.Entity("Trip_Planner.Models.Users.User", b =>
+            modelBuilder.Entity("Trip_Planner.Models.User", b =>
                 {
                     b.Navigation("Trips");
                 });
