@@ -9,5 +9,9 @@ namespace Trip_Planner.Interfaces
         Task<ActionResult<Trip>> GetTrip(int id);
         Task<ActionResult<Trip>> UpdateTrip(int id, UpdateTripModel updateTripModel);
         Task<ActionResult> DeleteTrip(int id);
+        Task<ActionResult<Destination>> CreateDestination(Destination destination);
+        Task<ActionResult<IEnumerable<Destination>>> GetDestinations(int id);
+        Task<ActionResult> DeleteDestination(int tripId, int destinationId);
+        
     }
 }
