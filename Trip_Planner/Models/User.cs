@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace Trip_Planner.Models
 {
@@ -14,6 +15,8 @@ namespace Trip_Planner.Models
 
         [Required]
         public string Password { get; set; }
+
+        [JsonIgnore]
         public ICollection<Trip> Trips { get; set; }
     }
 }
