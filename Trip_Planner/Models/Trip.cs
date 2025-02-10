@@ -17,5 +17,8 @@ namespace Trip_Planner.Models
 
         [JsonIgnore]
         public ICollection<Destination> Destinations { get; set; }
+
+        [JsonIgnore]
+        public ICollection<Activity> Activities { get; set; }
     }
 }
