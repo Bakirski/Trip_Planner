@@ -1,4 +1,5 @@
-﻿using Microsoft.IdentityModel.Tokens;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -8,8 +9,12 @@ namespace Trip_Planner.Services
 {
     public class JwtService
     {
-        private readonly string _secretKey = Environment.GetEnvironmentVariable("JWT_SECRET_KEY");
+        private readonly IConfiguration _configuration;
 
+        public JwtService(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
         public string GenerateJwtToken(User user)
         {
             var claims = new[]
@@ -18,14 +23,14 @@ namespace Trip_Planner.Services
             new Claim(ClaimTypes.Name, user.UserEmail),
         };
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_secretKey));
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWTKey:Secret"]));
             var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
             var token = new JwtSecurityToken(
                 issuer: "trip-planner-auth",
                 audience: "trip-planner-api",
                 claims: claims,
-                expires: DateTime.Now.AddHours(1),
+                expires: DateTime.Now.AddDays(3),
                 signingCredentials: credentials
             );
 
