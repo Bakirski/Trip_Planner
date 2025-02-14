@@ -1,0 +1,31 @@
+
+
+services:
+  backend:
+    build:
+      context: /Trip_Planner
+      dockerfile: Dockerfile
+    image: trip_planner
+    ports:
+      - "8080:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Host=database;Port=5433;Database=trip_planner_db;Username=postgres;Password=Bakir123420
+    depends_on:
+      - database
+
+  database:
+    image: postgres:latest
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - PGUSER=postgres
+      - POSTGRES_PASSWORD=Bakir123420
+      - POSTGRES_DB=trip_planner_db
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:

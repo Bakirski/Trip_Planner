@@ -21,6 +21,17 @@ builder.Services.AddScoped<JwtService>();
 builder.Services.AddScoped<ITripService, TripService>();
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", builder =>
+    {
+        builder.AllowAnyOrigin()
+               .AllowAnyMethod()   
+               .AllowAnyHeader();   
+    });
+});
+
+
 builder.Services.AddSwaggerGen(c =>
 {
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
@@ -85,7 +96,7 @@ else
 app.UseStaticFiles();
 
 app.UseRouting();
-
+app.UseCors("AllowAll");
 app.UseAuthentication();
 app.UseAuthorization();
 
@@ -98,6 +109,7 @@ app.MapControllerRoute(
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
 
 app.MapControllers();
 

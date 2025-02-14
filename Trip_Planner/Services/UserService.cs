@@ -19,7 +19,7 @@ namespace Trip_Planner.Services
         }
 
 
-        public async Task<ActionResult<User>> RegisterUser(UserRegistrationModel model)
+        public async Task<ActionResult<User>> RegisterUser([FromBody] UserRegistrationModel model)
         {
             var existingUser = await _dbContext.Users
             .FirstOrDefaultAsync(u => u.Username == model.Username || u.UserEmail == model.Email);
@@ -44,14 +44,15 @@ namespace Trip_Planner.Services
 
             return new OkObjectResult(user);
         }
-        public async Task<IActionResult> AuthenticateUser(UserLoginModel model)
+
+        public async Task<IActionResult> AuthenticateUser([FromBody] UserLoginModel model)
         {
             if (model == null)
             {
                 return new BadRequestObjectResult("Incomplete data provided.");
             }
 
-            // Fetch user from database (example using Entity Framework)
+           
             var user = await _dbContext.Users
                 .Where(u => u.UserEmail == model.UserEmail)
                 .FirstOrDefaultAsync();
@@ -61,7 +62,7 @@ namespace Trip_Planner.Services
                 return new BadRequestObjectResult("User is not registered. Please Sign Up.");
             }
 
-            // Compare provided password with stored hashed password
+            
             var hasher = new PasswordHasher<User>();
             var isPasswordValid = hasher.VerifyHashedPassword(user, user.Password, model.Password);
             if (isPasswordValid != PasswordVerificationResult.Success)
