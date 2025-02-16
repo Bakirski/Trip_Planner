@@ -10,9 +10,11 @@ services:
       - "8080:8080"
     networks:
       - trip_network 
+    container_name: backend
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionStrings__DefaultConnection=Host=database;Port=5433;Database=trip_planner_db;Username=postgres;Password=Bakir123420
+      - ASPNETCORE_URLS=http://*:8080 
+      - ConnectionStrings__DefaultConnection=Host=database;Port=5432;Database=trip_planner;Username=postgres;Password=Bakir123420
     depends_on:
       - database
 
@@ -22,9 +24,8 @@ services:
     container_name: database
     environment:
       - POSTGRES_USER=postgres
-      - PGUSER=postgres
       - POSTGRES_PASSWORD=Bakir123420
-      - POSTGRES_DB=trip_planner_db
+      - POSTGRES_DB=trip_planner
     ports:
       - "5433:5432"
     networks:
