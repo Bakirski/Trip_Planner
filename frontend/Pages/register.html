@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Registration</title>
+  </head>
+  <body>
+    <form method="POST" id="registerForm">
+      <label for="userName">Username</label>
+      <input type="text" name="userName" id="userName" placeholder="Example" />
+      <label for="userEmail">E-mail</label>
+      <input
+        type="text"
+        name="userEmail"
+        id="userEmail"
+        placeholder="someone@example.com"
+      />
+      <label for="userPassword">Password</label>
+      <input
+        type="password"
+        name="userPassword"
+        id="userPassword"
+        placeholder="********"
+      />
+      <label for="confirmPassword">Confirm Password</label>
+      <input
+        type="password"
+        name="confirmPassword"
+        id="confirmPassword"
+        placeholder="********"
+      />
+      <input type="submit" value="Sign Up" />
+      <p>Already have an account? <a href="/">Log In</a></p>
+    </form>
+
+    <script src="/script.js"></script>
+  </body>
+</html>
