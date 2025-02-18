@@ -58,6 +58,19 @@ namespace Trip_Planner.Controllers
         }
 
         [Authorize]
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Trip>>> GetTrips()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (string.IsNullOrEmpty(userId))
+            {
+                return Unauthorized("User ID not found in token.");
+            }
+            int parsedUserId = int.Parse(userId);
+            return await _tripService.GetTrips(parsedUserId);
+        }
+
+        [Authorize]
         [HttpPut("{id}")]
         public async Task<ActionResult<Trip>> UpdateTrip(int id, [FromBody] UpdateTripModel updateTripModel)
         {

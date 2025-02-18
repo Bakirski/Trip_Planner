@@ -46,6 +46,16 @@ namespace Trip_Planner.Services
             return new OkObjectResult(trip);
         }
 
+        public async Task<ActionResult<IEnumerable<Trip>>> GetTrips(int userId)
+        {
+            var trips = await _dbContext.Trips.Where(t => t.UserId == userId).ToListAsync();
+            if (trips.Count == 0)
+            {
+                return new NotFoundObjectResult("Could not find any trips for this user.");
+            }
+            return new OkObjectResult(trips);
+        }
+
         public async Task<ActionResult<Trip>> UpdateTrip(int id, UpdateTripModel trip)
         {
             var existingTrip = await _dbContext.Trips.FindAsync(id);

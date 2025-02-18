@@ -10,6 +10,7 @@ namespace Trip_Planner.Interfaces
     {
         Task<ActionResult<Trip>> CreateTrip(Trip trip);
         Task<ActionResult<Trip>> GetTrip(int id);
+        Task<ActionResult<IEnumerable<Trip>>> GetTrips(int userId);
         Task<ActionResult<Trip>> UpdateTrip(int id, UpdateTripModel updateTripModel);
         Task<ActionResult> DeleteTrip(int id);
         Task<ActionResult<Destination>> CreateDestination(Destination destination);
