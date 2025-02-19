@@ -21,7 +21,7 @@
     </div>
     <br />
     <div class="trip-buttons">
-      <button id="displayFormButton" onclick="toggleForm()">
+      <button id="displayFormButton" onclick="toggleCreateForm()">
         Create New Trip
       </button>
       <form class="create-trip-form hidden" id="createTripForm">
@@ -35,6 +35,21 @@
         <input type="date" id="startDate" />
         <label for="endDate">End Date</label>
         <input type="date" id="endDate" />
+        <input type="submit" value="Submit" />
+      </form>
+    </div>
+    <div>
+      <form class="update-trip-form hidden" id="updateTripForm">
+        <label for="tripName">Trip Name</label>
+        <input type="text" name="tripName" id="updateTripName" />
+        <label for="destination">Destination</label>
+        <input type="text" name="destination" id="updateDestination" />
+        <label for="description">Description</label>
+        <textarea name="description" id="updateDescription"></textarea>
+        <label for="startDate">Start Date</label>
+        <input type="date" id="updateStartDate" />
+        <label for="endDate">End Date</label>
+        <input type="date" id="updateEndDate" />
         <input type="submit" value="Submit" />
       </form>
     </div>
