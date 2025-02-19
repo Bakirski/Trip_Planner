@@ -1,0 +1,40 @@
+body {
+    font-family: Arial, sans-serif;
+  }
+  
+  .dataContainer {
+    margin: 20px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .data-item {
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .trips-table{
+    width:32%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 18px;
+    text-align: left;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .create-trip-form{
+    display: flex;
+    flex-direction: column;
+    width: 20%;
+  }
+
+  .create-trip-form label{
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
+
+  .hidden{
+    display: none;
+  }
