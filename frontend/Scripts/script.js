@@ -66,20 +66,3 @@ async function authenticateUser(userEmail, userPassword) {
 window.addEventListener("load", function () {
   console.log("Window fully loaded!");
 });
-
-//USER DETAIL FETCH
-async function getUser() {
-  try {
-    const response = await fetch("http://localhost:5063/api/user", {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${bearerToken}`,
-      },
-    });
-
-    const userData = await response.json();
-    console.log(userData.value);
-  } catch (error) {
-    console.error("Error getting user data: ", error);
-  }
-}
