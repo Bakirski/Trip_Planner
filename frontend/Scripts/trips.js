@@ -39,8 +39,8 @@ function displayData(data) {
       }</td>
       <td>${item.startDate}</td>
       <td>${item.endDate}</td>
-      <td><button value=${item.Id}>Update Trip</button></td>
-      <td><button value=${item.Id}>Delete Trip</button></td>`;
+      <td><button value=${item.id}>Update Trip</button></td>
+      <td><button onclick="deleteTrip(${item.id})">Delete Trip</button></td>`;
     dataContainer.appendChild(dataItem);
   });
 }
@@ -97,5 +97,21 @@ async function createTrip(
     console.log(data);
   } catch (error) {
     console.error("Error creating new trip: ", error);
+  }
+}
+
+async function deleteTrip(id) {
+  try {
+    const reponse = await fetch(`http://localhost:5063/api/trips/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${bearerToken}`,
+      },
+    });
+    alert("Trip deleted successfully.");
+    location.reload();
+  } catch (error) {
+    console.error("Error deleting trip: ", error);
   }
 }
