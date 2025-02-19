@@ -22,27 +22,43 @@ async function getTrips() {
   }
 }
 
+function escapeJSString(str) {
+  return String(str).replace(/'/g, "\\'").replace(/\n/g, "\\n");
+}
+
 function displayData(data) {
   const dataContainer = document.getElementById("dataContainer");
 
   data.forEach((item) => {
-    const dataItem = document.createElement("tr");
+    const dataItem = document.createElement("p");
     dataItem.classList.add("data-item");
 
     dataItem.innerHTML = `
-      <td>${item.tripName}</td> 
-      <td>${item.destination}</td> 
-      <td>${
-        item.description && item.description.trim()
-          ? item.description
-          : "No Description"
-      }</td>
-      <td>${item.startDate}</td>
-      <td>${item.endDate}</td>
-      <td><button
-       onclick="toggleUpdateForm(${item.id})">Update Trip</button></td>
-      <td><button onclick="deleteTrip(${item.id})">Delete Trip</button></td>`;
+      ${item.tripName}
+      <button 
+      onclick="displayDetails(
+      'Destination: ${item.destination}', 
+      'Description: ${escapeJSString(item.description)}', 
+      'Start Date: ${item.startDate}', 
+      'End Date: ${item.endDate}')">
+      Trip Details
+      </button>
+      <button
+       onclick="toggleUpdateForm(${item.id})">Update Trip</button>
+      <button onclick="deleteTrip(${item.id})">Delete Trip</button>`;
     dataContainer.appendChild(dataItem);
+  });
+}
+
+function displayDetails(destination, description, startDate, endDate) {
+  const tripDetails = document.getElementById("tripDetails");
+  tripDetails.innerHTML = "";
+  const details = [destination, description, startDate, endDate];
+
+  details.forEach((detail) => {
+    const item = document.createElement("p");
+    item.innerHTML = detail;
+    tripDetails.appendChild(item);
   });
 }
 
@@ -174,5 +190,22 @@ async function deleteTrip(id) {
     location.reload();
   } catch (error) {
     console.error("Error deleting trip: ", error);
+  }
+}
+
+//USER DETAIL FETCH
+async function getUser() {
+  try {
+    const response = await fetch("http://localhost:5063/api/user", {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${bearerToken}`,
+      },
+    });
+
+    const userData = await response.json();
+    console.log(userData.value);
+  } catch (error) {
+    console.error("Error getting user data: ", error);
   }
 }

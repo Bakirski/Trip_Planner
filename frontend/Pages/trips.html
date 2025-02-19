@@ -9,21 +9,14 @@
   <body>
     <h1>Trip Management</h1>
     <div id="dataContainer">
-      <table class="trips-table">
-        <tr>
-          <th>Trip Name</th>
-          <th>Destination</th>
-          <th>Description</th>
-          <th>Start Date</th>
-          <th>End Date</th>
-        </tr>
-      </table>
+      <h2>Trip Name</h2>
     </div>
     <br />
     <div class="trip-buttons">
       <button id="displayFormButton" onclick="toggleCreateForm()">
         Create New Trip
       </button>
+      <button onclick="getUser()">Get User Data</button>
       <form class="create-trip-form hidden" id="createTripForm">
         <label for="tripName">Trip Name</label>
         <input type="text" name="tripName" id="tripName" />
@@ -53,6 +46,7 @@
         <input type="submit" value="Submit" />
       </form>
     </div>
+    <div id="tripDetails"></div>
 
     <script src="/Scripts/trips.js"></script>
   </body>
