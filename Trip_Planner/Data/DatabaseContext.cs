@@ -27,10 +27,6 @@ namespace Trip_Planner.Data
                 .HasForeignKey(t => t.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            modelBuilder.Entity<Trip>()
-                .Property(t => t.Destination)
-                .HasDefaultValue("");
-
             modelBuilder.Entity<Destination>()
                 .HasOne<Trip>()
                 .WithMany(d => d.Destinations)
