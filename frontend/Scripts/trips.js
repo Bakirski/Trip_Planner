@@ -33,11 +33,15 @@ function displayData(data) {
     const dataItem = document.createElement("p");
     dataItem.classList.add("data-item");
 
+    const destinationNames = item.destinations
+      .map((dest) => dest.destinationName)
+      .join(" | ");
+
     dataItem.innerHTML = `
       ${item.tripName}
       <button 
       onclick="displayDetails(
-      'Destination: ${item.destination}', 
+      'Destinations: ${destinationNames}', 
       'Description: ${escapeJSString(item.description)}', 
       'Start Date: ${item.startDate}', 
       'End Date: ${item.endDate}')">
@@ -45,9 +49,16 @@ function displayData(data) {
       </button>
       <button
        onclick="toggleUpdateForm(${item.id})">Update Trip</button>
-      <button onclick="deleteTrip(${item.id})">Delete Trip</button>`;
+      <button onclick="deleteTrip(${item.id})">Delete Trip</button>
+      <button onclick="destinationsRedirect(${item.id})">Destinations</button>`;
     dataContainer.appendChild(dataItem);
   });
+}
+
+function destinationsRedirect(id) {
+  window.location.href = "/Pages/destinations.html";
+  sessionStorage.setItem("tripId", id);
+  console.log(sessionStorage.getItem("tripId"));
 }
 
 function displayDetails(destination, description, startDate, endDate) {
@@ -103,11 +114,15 @@ async function createTrip(
         Authorization: `Bearer ${bearerToken}`,
       },
       body: JSON.stringify({
-        TripName: tripName,
-        Destination: tripDestination,
-        Description: tripDescription,
-        StartDate: startDate,
-        EndDate: endDate,
+        trip: {
+          TripName: tripName,
+          Description: tripDescription,
+          StartDate: startDate,
+          EndDate: endDate,
+        },
+        destination: {
+          DestinationName: tripDestination,
+        },
       }),
     });
     const data = await response.json();
@@ -171,9 +186,30 @@ async function updateTrip(
       }),
     });
     alert("Trip updated successfully.");
+    updateDestination(id, tripDestination);
     sessionStorage.removeItem("id");
   } catch (error) {
     console.error("Error updating trip: ", error);
+  }
+}
+
+async function updateDestination(tripId, destination) {
+  try {
+    const response = await fetch(
+      `http://localhost:5063/api/trips/${tripId}/destinations`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${bearerToken}`,
+        },
+        body: JSON.stringify({
+          DestinationName: destination,
+        }),
+      }
+    );
+  } catch (error) {
+    console.log("Error updating destination: ", error);
   }
 }
 
