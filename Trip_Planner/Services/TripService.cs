@@ -22,15 +22,7 @@ namespace Trip_Planner.Services
         {
             _dbContext.Trips.Add(trip);
             await _dbContext.SaveChangesAsync();
-            var destination = new Destination
-            {
-                DestinationName = trip.Destination,
-                TripId = trip.Id
-            };
 
-            _dbContext.Destinations.Add(destination);
-
-            await _dbContext.SaveChangesAsync();
             return new OkObjectResult(trip);
         }
 
@@ -48,11 +40,16 @@ namespace Trip_Planner.Services
 
         public async Task<ActionResult<IEnumerable<Trip>>> GetTrips(int userId)
         {
-            var trips = await _dbContext.Trips.Where(t => t.UserId == userId).ToListAsync();
-            if (trips.Count == 0)
+            var trips = await _dbContext.Trips
+                .Where(t => t.UserId == userId)
+                .Include(t => t.Destinations)
+                .ToListAsync();
+
+            if (trips == null || !trips.Any())
             {
                 return new NotFoundObjectResult("Could not find any trips for this user.");
             }
+
             return new OkObjectResult(trips);
         }
 
@@ -64,12 +61,23 @@ namespace Trip_Planner.Services
                 return new NotFoundObjectResult("Could not find trip to update.");
             }
             existingTrip.TripName = trip.TripName;
-            existingTrip.Destination = trip.Destination;
             existingTrip.Description = trip.Description;
             existingTrip.StartDate = trip.StartDate;
             existingTrip.EndDate = trip.EndDate;
             await _dbContext.SaveChangesAsync();
-            return new OkObjectResult(existingTrip);
+
+            var existingDestination = await _dbContext.Destinations.SingleOrDefaultAsync(d => d.TripId == id);
+            if (existingDestination == null)
+            {
+                return new NotFoundObjectResult("Could not find destination to update.");
+            }
+            var response = new
+            {
+                Trip = existingTrip,
+                Destination = existingDestination
+            };
+
+            return new OkObjectResult(response);
         }
 
         public async Task<ActionResult> DeleteTrip(int id)
@@ -101,6 +109,19 @@ namespace Trip_Planner.Services
             }
 
             return new OkObjectResult(destinations);
+        }
+
+        public async Task<ActionResult<Destination>> UpdateDestination(int id, CreateDestinationModel destination)
+        {
+            var existingDestination = await _dbContext.Destinations.SingleOrDefaultAsync(d => d.TripId == id);
+
+            if (existingDestination == null)
+            {
+                return new NotFoundObjectResult("Could not find destination to update.");
+            }
+            existingDestination.DestinationName = destination.DestinationName;
+            await _dbContext.SaveChangesAsync();
+            return new OkObjectResult(existingDestination);
         }
 
         public async Task<ActionResult> DeleteDestination(int tripId, int destinationId)
