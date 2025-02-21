@@ -1,4 +1,5 @@
-﻿using System.Security.Claims;
+﻿using System.Diagnostics;
+using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Trip_Planner.Interfaces;
@@ -8,6 +9,7 @@ using Trip_Planner.Models.Destinations;
 using Trip_Planner.Models.Expenses;
 using Trip_Planner.Models.Trips;
 using Trip_Planner.Services;
+using Activity = Trip_Planner.Models.Activities.Activity;
 
 namespace Trip_Planner.Controllers
 {
@@ -16,9 +18,11 @@ namespace Trip_Planner.Controllers
     public class TripController : ControllerBase
     {
         private readonly ITripService _tripService;
-        public TripController(ITripService tripService)
+        private readonly ILogger<TripController> _logger;
+        public TripController(ITripService tripService, ILogger<TripController> logger)
         {
             _tripService = tripService;
+            _logger = logger;
         }
 
         [Authorize]
@@ -26,6 +30,11 @@ namespace Trip_Planner.Controllers
         public async Task<ActionResult<Trip>> CreateTrip([FromBody] CreateTripWithDestinationModel model)
         {
             if(!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if (model == null || model.Trip == null || model.Destination == null)
             {
                 return BadRequest("Invalid data provided.");
             }
@@ -52,12 +61,12 @@ namespace Trip_Planner.Controllers
             var destination = new Destination
             {
                 DestinationName = model.Destination.DestinationName,
-                TripId = tripResult.Value.Id
+                TripId = tripResult.Id
             };
+
             var destinationResult = await _tripService.CreateDestination(destination);
 
-
-            return Ok(new { Trip = tripResult.Value, Destination = destinationResult.Value });
+            return Ok(new { Trip = tripResult, Destination = destinationResult });
         }
 
         [Authorize]
