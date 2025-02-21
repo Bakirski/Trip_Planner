@@ -145,31 +145,15 @@ document
 
     const id = sessionStorage.getItem("id");
     const tripName = document.getElementById("updateTripName").value;
-    const tripDestination = document.getElementById("updateDestination").value;
     const tripDescription = document.getElementById("updateDescription").value;
     const startDate = document.getElementById("updateStartDate").value;
     const endDate = document.getElementById("updateEndDate").value;
-    console.log(startDate);
 
-    await updateTrip(
-      id,
-      tripName,
-      tripDestination,
-      tripDescription,
-      startDate,
-      endDate
-    );
+    await updateTrip(id, tripName, tripDescription, startDate, endDate);
     location.reload();
   });
 
-async function updateTrip(
-  id,
-  tripName,
-  tripDestination,
-  tripDescription,
-  startDate,
-  endDate
-) {
+async function updateTrip(id, tripName, tripDescription, startDate, endDate) {
   try {
     const response = await fetch(`http://localhost:5063/api/trips/${id}`, {
       method: "PUT",
@@ -179,7 +163,6 @@ async function updateTrip(
       },
       body: JSON.stringify({
         TripName: tripName,
-        Destination: tripDestination,
         Description: tripDescription,
         StartDate: startDate,
         EndDate: endDate,
