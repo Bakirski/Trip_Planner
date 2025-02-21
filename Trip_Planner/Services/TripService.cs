@@ -18,12 +18,12 @@ namespace Trip_Planner.Services
             _dbContext = dbContext;
         }
 
-        public async Task<ActionResult<Trip>> CreateTrip(Trip trip)
+        public async Task<Trip> CreateTrip(Trip trip)
         {
             _dbContext.Trips.Add(trip);
             await _dbContext.SaveChangesAsync();
 
-            return new OkObjectResult(trip);
+            return trip;
         }
 
         public async Task<ActionResult<Trip>> GetTrip(int id)
@@ -66,18 +66,7 @@ namespace Trip_Planner.Services
             existingTrip.EndDate = trip.EndDate;
             await _dbContext.SaveChangesAsync();
 
-            var existingDestination = await _dbContext.Destinations.SingleOrDefaultAsync(d => d.TripId == id);
-            if (existingDestination == null)
-            {
-                return new NotFoundObjectResult("Could not find destination to update.");
-            }
-            var response = new
-            {
-                Trip = existingTrip,
-                Destination = existingDestination
-            };
-
-            return new OkObjectResult(response);
+            return new OkObjectResult(existingTrip);
         }
 
         public async Task<ActionResult> DeleteTrip(int id)

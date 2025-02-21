@@ -7,9 +7,6 @@ namespace Trip_Planner.Models.Trips
         [Required]
         public string TripName { get; set; }
 
-        [Required]
-        public string Destination { get; set; }
-
         public string Description { get; set; }
 
         [Required]

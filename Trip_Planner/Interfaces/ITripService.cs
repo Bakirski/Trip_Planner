@@ -8,7 +8,7 @@ namespace Trip_Planner.Interfaces
 {
     public interface ITripService
     {
-        Task<ActionResult<Trip>> CreateTrip(Trip trip);
+        Task<Trip> CreateTrip(Trip trip);
         Task<ActionResult<Trip>> GetTrip(int id);
         Task<ActionResult<IEnumerable<Trip>>> GetTrips(int userId);
         Task<ActionResult<Trip>> UpdateTrip(int id, UpdateTripModel updateTripModel);
