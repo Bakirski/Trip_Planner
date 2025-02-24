@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Activities</title>
+    <link rel="stylesheet" href="/styles/styles.css" />
+  </head>
+  <body>
+    <button onclick="history.back()">Back</button>
+    <div id="activitiesContainer">
+      <h2 id="tripTitle"></h2>
+    </div>
+    <button onclick="toggleActivitiesForm()">Create Activity</button>
+    <form id="activitiesForm" class="activities-form hidden">
+      <label for="activityName">Activity Name</label>
+      <input type="text" name="activityName" id="activityName" />
+      <input type="submit" value="Submit" />
+    </form>
+    <script src="/Scripts/activities.js"></script>
+  </body>
+</html>

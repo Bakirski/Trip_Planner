@@ -50,7 +50,8 @@ function displayData(data) {
       <button
        onclick="toggleUpdateForm(${item.id})">Update Trip</button>
       <button onclick="deleteTrip(${item.id})">Delete Trip</button>
-      <button onclick="destinationsRedirect(${item.id})">Destinations</button>`;
+      <button onclick="destinationsRedirect(${item.id})">Destinations</button>
+      <button onclick="activitiesRedirect(${item.id})">Activities</button>`;
     dataContainer.appendChild(dataItem);
   });
 }
@@ -59,6 +60,11 @@ function destinationsRedirect(id) {
   window.location.href = "/Pages/destinations.html";
   sessionStorage.setItem("tripId", id);
   console.log(sessionStorage.getItem("tripId"));
+}
+
+function activitiesRedirect(id) {
+  window.location.href = "/Pages/activities.html";
+  sessionStorage.setItem("tripId", id);
 }
 
 function displayDetails(destination, description, startDate, endDate) {

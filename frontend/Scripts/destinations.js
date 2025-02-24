@@ -2,18 +2,26 @@ const tripId = sessionStorage.getItem("tripId");
 const bearerToken = localStorage.getItem("bearerToken");
 
 window.onload = function () {
-  getTrip(tripId);
+  getDestinations(tripId);
 };
 
-async function getTrip(id) {
+async function getDestinations(id) {
   try {
-    const response = await fetch(`http://localhost:5063/api/trips/${id}`, {
+    const tripResponse = await fetch(`http://localhost:5063/api/trips/${id}`, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${bearerToken}`,
       },
     });
-    const response2 = await fetch(
+
+    if (!tripResponse.ok) {
+      const errorText = await tripResponse.text();
+      throw new Error(
+        errorText || `Trip request failed with status ${tripResponse.status}`
+      );
+    }
+
+    const destinationsResponse = await fetch(
       `http://localhost:5063/api/trips/${id}/destinations`,
       {
         headers: {
@@ -23,16 +31,29 @@ async function getTrip(id) {
       }
     );
 
-    const tripData = await response.json();
-    sessionStorage.setItem("tripId", tripData.id);
-    const destinationData = await response2.json();
+    if (!destinationsResponse.ok) {
+      const errorText = await destinationsResponse.text();
+      throw new Error(
+        errorText ||
+          `Activities request failed with status ${tripResponse.status}`
+      );
+    }
 
+    const tripData = await tripResponse.json();
+    sessionStorage.setItem("tripId", tripData.id);
+
+    const destinationsData = await destinationsResponse.json();
     console.log(tripData);
-    console.log(destinationData);
-    const data = [tripData, destinationData.length ? destinationData : []];
+    console.log(destinationsData);
+
+    var data =
+      destinationsData && destinationsData.length > 0
+        ? [tripData, destinationsData]
+        : [tripData];
     displayData(data);
   } catch (error) {
     console.log("Error fetching data: ", error);
+    alert(error.message);
   }
 }
 
@@ -42,9 +63,9 @@ function displayData(data) {
   );
 
   const tripTitle = document.getElementById("tripTitle");
-  tripTitle.textContent = data[0].tripName;
+  tripTitle.innerHTML = `Activities for "${data[0].tripName}"`;
 
-  if (data[1].length > 0) {
+  if (data.length > 1) {
     data[1].forEach((item) => {
       const dataItem = document.createElement("p");
       dataItem.innerHTML = `
