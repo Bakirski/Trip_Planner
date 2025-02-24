@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Trip Expenses</title>
+    <link rel="stylesheet" href="/styles/styles.css" />
+  </head>
+  <body>
+    <button onclick="history.back()">Back</button>
+    <div id="expensesContainer">
+      <h2 id="tripTitle"></h2>
+    </div>
+    <button onclick="toggleExpensesForm()">New Expense</button>
+    <form id="expensesForm" class="expenses-form hidden">
+      <label for="expenseName">Expense Name</label>
+      <input type="text" name="expenseName" id="expenseName" />
+      <label for="expenseAmount">Amount</label>
+      <input type="text" name="expenseAmount" id="expenseAmount" />
+      <input type="submit" value="Submit" />
+    </form>
+
+    <script src="/Scripts/expenses.js"></script>
+  </body>
+</html>

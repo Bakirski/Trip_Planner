@@ -51,7 +51,8 @@ function displayData(data) {
        onclick="toggleUpdateForm(${item.id})">Update Trip</button>
       <button onclick="deleteTrip(${item.id})">Delete Trip</button>
       <button onclick="destinationsRedirect(${item.id})">Destinations</button>
-      <button onclick="activitiesRedirect(${item.id})">Activities</button>`;
+      <button onclick="activitiesRedirect(${item.id})">Activities</button>
+      <button onclick="expensesRedirect(${item.id})">Expenses</button>`;
     dataContainer.appendChild(dataItem);
   });
 }
@@ -64,6 +65,11 @@ function destinationsRedirect(id) {
 
 function activitiesRedirect(id) {
   window.location.href = "/Pages/activities.html";
+  sessionStorage.setItem("tripId", id);
+}
+
+function expensesRedirect(id) {
+  window.location.href = "/Pages/expenses.html";
   sessionStorage.setItem("tripId", id);
 }
 

@@ -40,7 +40,6 @@ async function getDestinations(id) {
     }
 
     const tripData = await tripResponse.json();
-    sessionStorage.setItem("tripId", tripData.id);
 
     const destinationsData = await destinationsResponse.json();
     console.log(tripData);

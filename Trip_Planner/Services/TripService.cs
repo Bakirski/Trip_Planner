@@ -179,14 +179,20 @@ namespace Trip_Planner.Services
 
         public async Task<ActionResult<IEnumerable<Expense>>> GetExpenses(int tripId)
         {
-            var expenses = await _dbContext.Expenses.Where(e => e.TripId == tripId).ToListAsync();
-
-            if (expenses.Count == 0)
+            try
             {
-                return new NotFoundObjectResult("Could not find any expenses for this trip.");
-            }
+                var expenses = await _dbContext.Expenses.Where(e => e.TripId == tripId).ToListAsync();
 
-            return new OkObjectResult(expenses);
+                if (expenses.Count == 0)
+                {
+                    return new NotFoundObjectResult("Could not find any expenses for this trip.");
+                }
+
+                return new OkObjectResult(expenses);
+            } catch (Exception ex)
+            {
+                return new ObjectResult(ex.Message) { StatusCode = 500 };
+            }
         }
 
         public async Task<ActionResult> DeleteExpense(int tripId, int expenseId)
