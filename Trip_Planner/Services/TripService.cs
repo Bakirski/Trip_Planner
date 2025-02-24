@@ -90,14 +90,21 @@ namespace Trip_Planner.Services
 
         public async Task<ActionResult<IEnumerable<Destination>>> GetDestinations(int id)
         {
-            var destinations = await _dbContext.Destinations.Where(d => d.TripId == id).ToListAsync();
-
-            if (destinations.Count == 0)
+            try
             {
-                return new NotFoundObjectResult("Could not find any destinations for this trip.");
-            }
+                var destinations = await _dbContext.Destinations.Where(d => d.TripId == id).ToListAsync();
 
-            return new OkObjectResult(destinations);
+                if (destinations.Count == 0)
+                {
+                    return new NotFoundObjectResult("Could not find any destinations for this trip.");
+                }
+
+                return new OkObjectResult(destinations);
+            }
+            catch (Exception ex)
+            {
+                return new ObjectResult(ex.Message) { StatusCode = 500 };
+            }
         }
 
         public async Task<ActionResult<Destination>> UpdateDestination(int id, CreateDestinationModel destination)
@@ -134,14 +141,21 @@ namespace Trip_Planner.Services
 
         public async Task<ActionResult<IEnumerable<Activity>>> GetActivities(int tripId)
         {
-            var activities = await _dbContext.Activities.Where(a => a.TripId == tripId).ToListAsync();
-
-            if (activities.Count == 0)
+            try
             {
-                return new NotFoundObjectResult("Could not find any activities for this trip.");
-            }
+                var activities = await _dbContext.Activities.Where(a => a.TripId == tripId).ToListAsync();
 
-            return new OkObjectResult(activities);
+                if (activities.Count == 0)
+                {
+                    return new NotFoundObjectResult("Could not find any activities for this trip.");
+                }
+
+                return new OkObjectResult(activities);
+            }
+            catch (Exception ex)
+            {
+                return new ObjectResult(ex.Message) { StatusCode = 500 };
+            }
         }
 
         public async Task<ActionResult> DeleteActivity(int tripId, int activityId)
