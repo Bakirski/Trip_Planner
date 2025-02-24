@@ -4,36 +4,31 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Trip Creation</title>
-    <link rel="stylesheet" href="/styles/styles.css" />
+    <link rel="stylesheet" href="/styles/trips.css" />
   </head>
   <body>
     <button onclick="history.back()">Back</button>
     <h1>Trip Management</h1>
-    <div id="dataContainer">
-      <h2>Trips</h2>
-    </div>
+    <button id="displayFormButton" onclick="toggleCreateForm()">
+      Create New Trip
+    </button>
+    <div id="dataContainer" class="trip-container"></div>
     <br />
-    <div class="trip-buttons">
-      <button id="displayFormButton" onclick="toggleCreateForm()">
-        Create New Trip
-      </button>
-      <button onclick="getUser()">Get User Data</button>
-      <form class="create-trip-form hidden" id="createTripForm">
-        <label for="tripName">Trip Name</label>
-        <input type="text" name="tripName" id="tripName" />
-        <label for="destination">Destination</label>
-        <input type="text" name="destination" id="destination" />
-        <label for="description">Description</label>
-        <textarea name="description" id="description"></textarea>
-        <label for="startDate">Start Date</label>
-        <input type="date" id="startDate" />
-        <label for="endDate">End Date</label>
-        <input type="date" id="endDate" />
-        <input type="submit" value="Submit" />
-      </form>
-    </div>
+    <form class="trip-form hidden" id="createTripForm">
+      <label for="tripName">Trip Name</label>
+      <input type="text" name="tripName" id="tripName" />
+      <label for="destination">Destination</label>
+      <input type="text" name="destination" id="destination" />
+      <label for="description">Description</label>
+      <textarea name="description" id="description"></textarea>
+      <label for="startDate">Start Date</label>
+      <input type="date" id="startDate" />
+      <label for="endDate">End Date</label>
+      <input type="date" id="endDate" />
+      <input type="submit" value="Submit" />
+    </form>
     <div>
-      <form class="update-trip-form hidden" id="updateTripForm">
+      <form class="trip-form hidden" id="updateTripForm">
         <label for="tripName">Trip Name</label>
         <input type="text" name="tripName" id="updateTripName" />
         <label for="description">Description</label>
@@ -45,7 +40,7 @@
         <input type="submit" value="Submit" />
       </form>
     </div>
-    <div id="tripDetails"></div>
+    <div id="tripDetails" class="hidden"></div>
 
     <script src="/Scripts/trips.js"></script>
   </body>

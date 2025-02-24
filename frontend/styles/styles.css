@@ -1,40 +1,65 @@
 body {
-    font-family: Arial, sans-serif;
-  }
-  
-  .dataContainer {
-    margin: 20px;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  
-  .data-item {
-    border-bottom: 1px solid #ddd;
-  }
-  
-  .trips-table{
-    width:32%;
-    border-collapse: collapse;
-    margin: 20px 0;
-    font-size: 18px;
-    text-align: left;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
+  font-family: Arial, sans-serif;
+}
 
-  .create-trip-form, .update-trip-form{
-    display: flex;
-    flex-direction: column;
-    width: 20%;
-  }
+.destination-form,
+.activities-form,
+.expenses-form {
+  display: flex;
+  flex-direction: column;
+  width: 20%;
+}
 
-  .create-trip-form label{
-    margin-top: 5px;
-    margin-bottom: 5px;
-  }
+.destination-form label,
+.activities-form label {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
 
-  .hidden{
-    display: none;
-  }
+.hidden {
+  display: none;
+}
+
+.account-form {
+  margin: auto;
+  margin-top: 5em;
+  display: flex;
+  flex-direction: column;
+  width: 15%;
+  border: 1px solid;
+  border-radius: 5px;
+  box-shadow: 1px 1px 5px 5px rgb(180, 177, 177);
+  background-color: rgb(235, 242, 248);
+  padding-top: 20px;
+  padding-bottom: 40px;
+  padding-right: 20px;
+  padding-left: 20px;
+}
+
+.account-form label,
+.account-form input {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.account-form input {
+  border: 1px solid;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.account-form p {
+  text-align: center;
+}
+
+.account-form p a {
+  text-decoration: none;
+  color: black;
+  border: 1px solid;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.account-form p a:hover {
+  opacity: 0.6;
+}

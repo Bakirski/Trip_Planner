@@ -30,7 +30,7 @@ function displayData(data) {
   const dataContainer = document.getElementById("dataContainer");
 
   data.forEach((item) => {
-    const dataItem = document.createElement("p");
+    const dataItem = document.createElement("div");
     dataItem.classList.add("data-item");
 
     const destinationNames = item.destinations
@@ -39,20 +39,24 @@ function displayData(data) {
 
     dataItem.innerHTML = `
       ${item.tripName}
-      <button 
-      onclick="displayDetails(
-      'Destinations: ${destinationNames}', 
-      'Description: ${escapeJSString(item.description)}', 
-      'Start Date: ${item.startDate}', 
-      'End Date: ${item.endDate}')">
-      Trip Details
-      </button>
       <button
-       onclick="toggleUpdateForm(${item.id})">Update Trip</button>
-      <button onclick="deleteTrip(${item.id})">Delete Trip</button>
-      <button onclick="destinationsRedirect(${item.id})">Destinations</button>
-      <button onclick="activitiesRedirect(${item.id})">Activities</button>
-      <button onclick="expensesRedirect(${item.id})">Expenses</button>`;
+       onclick="toggleUpdateForm(${item.id})">Update</button>
+      <button onclick="deleteTrip(${item.id})">Delete</button>
+      <div class="dropdown">
+      <button class="dropbtn">Details</button>
+      <div class="dropdown-content">
+        <button 
+        onclick="displayDetails(
+        'Destinations: ${destinationNames}', 
+        'Description: ${escapeJSString(item.description)}', 
+        'Start Date: ${item.startDate}', 
+        'End Date: ${item.endDate}')">
+        Trip Details
+        </button>
+        <button onclick="destinationsRedirect(${item.id})">Destinations</button>
+        <button onclick="activitiesRedirect(${item.id})">Activities</button>
+        <button onclick="expensesRedirect(${item.id})">Expenses</button>
+      `;
     dataContainer.appendChild(dataItem);
   });
 }
@@ -75,6 +79,7 @@ function expensesRedirect(id) {
 
 function displayDetails(destination, description, startDate, endDate) {
   const tripDetails = document.getElementById("tripDetails");
+  tripDetails.classList.toggle("hidden");
   tripDetails.innerHTML = "";
   const details = [destination, description, startDate, endDate];
 
@@ -225,6 +230,7 @@ async function deleteTrip(id) {
 }
 
 //USER DETAIL FETCH
+/*
 async function getUser() {
   try {
     const response = await fetch("http://localhost:5063/api/user", {
@@ -240,3 +246,4 @@ async function getUser() {
     console.error("Error getting user data: ", error);
   }
 }
+*/
