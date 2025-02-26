@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Weather Forecast</title>
+    <link rel="stylesheet" href="/styles/forecast.css" />
+  </head>
+  <body>
+    <button onclick="history.back()">Back</button>
+    <form id="forecastForm">
+      <label for="locationName">Location</label>
+      <input
+        type="text"
+        placeholder="London"
+        name="locationName"
+        id="locationName"
+      />
+      <input type="submit" value="Get Forecast" />
+    </form>
+    <div id="forecastContainer" class="forecast-container"></div>
+    <div
+      id="hourlyForecastContainer"
+      class="hourly-forecast-container hidden"
+    ></div>
+    <script src="/Scripts/forecast.js"></script>
+  </body>
+</html>
