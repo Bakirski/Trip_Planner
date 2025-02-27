@@ -28,6 +28,7 @@ document
       window.location.href = "/Pages/trips.html";
     } catch (error) {
       console.error("Error authenticating user: ", error);
+      alert(error);
     }
   });
 

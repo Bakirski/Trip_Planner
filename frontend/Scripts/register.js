@@ -14,6 +14,7 @@ document
       window.location.href = "/";
     } catch (error) {
       console.error("Error registering user: ", error);
+      alert(error);
     }
   });
 
