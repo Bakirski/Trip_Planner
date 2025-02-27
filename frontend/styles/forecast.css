@@ -1,5 +1,7 @@
 body {
   font-family: Arial, sans-serif;
+  background-color: #dde6ed;
+  color: #27374d;
 }
 
 .hidden {
@@ -47,4 +49,12 @@ body {
   border-radius: 5px;
   padding: 5px;
   background-color: aliceblue;
+}
+
+.forecast-form {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 15%;
 }
